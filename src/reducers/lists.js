@@ -26,14 +26,11 @@ let nextId = 3
 const lists = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_LIST':
-            return [
-                {
-                    name: action.text,
-                    tasks: [],
-                    id: (nextId++).toString()
-                }, ...state
-
-            ]
+            return [{
+                name: action.text,
+                tasks: [],
+                id: (nextId++).toString()
+            }, ...state]
         case 'DELETE_LIST':
             return state.filter(list => list.id !== action.id)
 
@@ -41,7 +38,7 @@ const lists = (state = initialState, action) => {
 
             var newTask = { name: action.text, id: nextId++ }
             var chosenList = state.filter(list => list.id === action.listLocation)[0]
-            console.log(chosenList)
+
             var oldListsFiltered = state.filter(list => list.id !== action.listLocation)
             chosenList.tasks.push(newTask)
             state = [chosenList].concat(oldListsFiltered)
@@ -63,3 +60,5 @@ const lists = (state = initialState, action) => {
 }
 
 export default lists
+
+//Account for not changing the order of the lists?
