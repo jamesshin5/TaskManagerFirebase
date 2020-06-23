@@ -1,3 +1,7 @@
+import * as firebase from "firebase";
+import "firebase/auth";
+import "firebase/firestore";
+
 import React from "react";
 import {
     View,
@@ -10,14 +14,29 @@ import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 
 class AddTask extends React.Component {
-    state = {
-        text: "",
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            text: "",
+        }
+    }
+
 
     addTask = (text) => {
-        this.props.dispatch({ type: "ADD_TASK", text, listLocation: this.props.listID });
+        console.log(this.selectedList)
+        firebase.firestore().collection('Lists').where("name", "==", this.props.listName)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    firebase.firestore().collection("Lists").doc(doc.id)
+                    .update({tasks: firebase.firestore.FieldValue.arrayUnion({name: text, id: Math.random().toString()})});
+                   
+                });
+            })
+
         this.setState({ text: "" });
     };
+    
 
     render() {
         return (

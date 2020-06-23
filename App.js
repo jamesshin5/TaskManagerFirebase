@@ -1,3 +1,19 @@
+import * as firebase from "firebase";
+import "firebase/auth";
+import "firebase/firestore";
+
+// initialize Firebase if it's not initialized already
+const firebaseConfig = {apiKey: "AIzaSyAEwXZAH8hHdrFqRvV_wBx9EUIaTphKhiA",
+    authDomain: "taskmanager-avenujamesdemo.firebaseapp.com",
+    databaseURL: "https://taskmanager-avenujamesdemo.firebaseio.com",
+    projectId: "taskmanager-avenujamesdemo",
+    storageBucket: "taskmanager-avenujamesdemo.appspot.com",
+    messagingSenderId: "298289146513",
+    appId: "1:298289146513:web:3db701b313ffac0cd16d30",
+    measurementId: "G-8WQLWSE7SE"}
+
+firebase.initializeApp(firebaseConfig);
+
 import React, { Component } from "react";
 import {
   View,

@@ -1,3 +1,7 @@
+import * as firebase from "firebase";
+import "firebase/auth";
+import "firebase/firestore";
+
 import React, { Component } from "react";
 import {
     View,
@@ -12,6 +16,27 @@ import AddList from './containers/AddList'
 import lists from './reducers/lists'
 
 class MenuScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            lists : [],
+        }
+    }
+    
+    componentDidMount() {
+        var that = this;
+        const ref = firebase.firestore().collection('Lists')
+        ref.onSnapshot(querySnapshot => {
+            var preData = [];
+            querySnapshot.forEach(documentSnaphot => {
+            console.log('document: ', documentSnaphot.data())
+            preData = [...preData, documentSnaphot.data() ];
+        });
+        that.setState({
+            lists: preData,
+        });
+        });
+    }
 
     render() {
         return (
@@ -21,9 +46,9 @@ class MenuScreen extends Component {
                     <AddList />
 
                     <View style={{ padding: 20, width: '100%' }}>
-                        {this.props.lists.map(list =>
-                            <View style={{ paddingTop: 10 }}>
-                                <TouchableOpacity key={list.id} onPress={() => this.props.navigation.navigate('Tasks', { title: list.name, chosenID: list.id })}>
+                        {this.state.lists.map(list =>
+                            <View style={{ paddingTop: 10 }}  key={list.id}>
+                                <TouchableOpacity  onPress={() => this.props.navigation.navigate('Tasks', { title: list.name, chosenID: list.id })}>
                                     <Text style={{
                                         fontSize: 20,
                                         fontWeight: '200',
