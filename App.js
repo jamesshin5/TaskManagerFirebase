@@ -13,6 +13,10 @@ const firebaseConfig = {apiKey: "AIzaSyAEwXZAH8hHdrFqRvV_wBx9EUIaTphKhiA",
     measurementId: "G-8WQLWSE7SE"}
 
 firebase.initializeApp(firebaseConfig);
+firebase.firestore().settings({
+  host: 'localhost:8080',
+  ssl: false,
+});
 
 import React, { Component } from "react";
 import {

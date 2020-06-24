@@ -34,8 +34,7 @@ class TaskScreen extends Component {
                 tasks: retrievedTasks
             })
         });
-    })
-        
+    })   
     }
 
     deleteTask = (title, taskID) => {
